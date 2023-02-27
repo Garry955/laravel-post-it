@@ -6,10 +6,10 @@
 # Don't forget to npm install to load dependencies
 The project uses Laravel, TailwindCss, AlpineJS
 
-Basic Authentication provided by Laravel
-User CRUD functionality
-Post CRUD functionality
-Friendship relations between users
+Basic Authentication provided by Laravel, 
+User CRUD functionality, 
+Post CRUD functionality, 
+Friendship relations between users, 
 
 # @TODO:
 - Finish View components and view endpoints
