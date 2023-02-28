@@ -11,7 +11,6 @@
     </div>
             <x-user.portfolio>
             </x-user.portfolio>
-    Váltás
     <div>
         Pictures
     </div>

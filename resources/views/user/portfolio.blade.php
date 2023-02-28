@@ -1,45 +1,37 @@
-<section
-  x-data="
-        {
-          selectedTab: 'images',
-          activeClasses: 'bg-primary text-white',
-          inactiveClasses: 'text-body-color hover:bg-primary hover:text-white',
-        }
-      "
-  class="pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
-    <div class="container">
-    </div>
-        <div class="-mx-4 flex flex-wrap justify-center">
-            <div class="w-full px-4">
-              <ul class="mb-12 flex flex-wrap justify-center space-x-1">
-                @foreach($tabs as $tab)
+<section x-data="{
+    selectedTab: 'card',
+    activeClasses: 'bg-primary text-white',
+    inactiveClasses: 'text-body-color hover:bg-primary hover:text-white',
+}" class="pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
+    <div class="-mx-4 flex flex-wrap justify-center">
+        <div class="w-full px-4">
+            <ul class="mb-12 flex flex-wrap justify-center space-x-1">
+                @foreach ($tabs as $tab)
                     <li class="mb-1">
-                        <button
-                        @click="selectedTab = '{{ $tab }}' "
-                        :class="selectedTab == '{{ $tab }}' ? activeClasses : inactiveClasses "
-                        class="inline-block rounded-lg py-2 px-16 text-center text-base font-semibold transition md:py-3"
-                        >
-                        {{ $tab }}
+                        <button @click="selectedTab = '{{ $tab }}' "
+                            :class="selectedTab == '{{ $tab }}' ? activeClasses : inactiveClasses"
+                            class="inline-block rounded-lg py-2 px-20 text-center text-base font-semibold transition md:py-3">
+                            {{ $tab }}
                         </button>
                     </li>
                 @endforeach
-              </ul>
-            </div>
+            </ul>
         </div>
-        <div :class="selectedTab == 'posts' || selectedTab == 'posts' ? 'block' : 'hidden' "class="w-full px-4">
-            @foreach($posts as $post)
-                <x-post.card :post="$post" />
-            @endforeach
-        </div>
-        <div :class="selectedTab == 'images' || selectedTab == 'images' ? 'block' : 'hidden' "class="w-full px-4">
-            Images
-        </div>
-        <div :class="selectedTab == 'card' || selectedTab == 'card' ? 'block' : 'hidden' "class="w-full px-4">
-            Card
-        </div>
-        </div>
-            {{-- @foreach($items[$tab] as $key => $item)
-                @if ($tab == "card")
+    </div>
+    <div :class="selectedTab == 'posts' || selectedTab == 'posts' ? 'block' : 'hidden'" class="w-full px-4">
+        @foreach ($posts as $post)
+            <x-post.card :post="$post" />
+        @endforeach
+    </div>
+    <div :class="selectedTab == 'images' || selectedTab == 'images' ? 'block' : 'hidden'" class="w-full px-4">
+        Images
+    </div>
+    <div :class="selectedTab == 'card' || selectedTab == 'card' ? 'block' : 'hidden'" class="w-full px-4">
+          <x-user.card :user="$user"/>
+    </div>
+    </div>
+    {{-- @foreach ($items[$tab] as $key => $item)
+                @if ($tab == 'card')
                 <div
                     :class="selectedTab == '{{ $tab }}' || selectedTab == '{{ $tab }}' ? 'block' : 'hidden' "
                     class="w-full px-4">
@@ -54,11 +46,11 @@
                         @endphp
                         <x-post.card post="{{ $item }}"/>
                     </div> --}}
-                    {{-- @foreach($item as $k => $v)
+    {{-- @foreach ($item as $k => $v)
                         {{ $v }}
                     @endforeach --}}
-                {{-- @elseif($tab == "posts")
-                    @foreach($item as $k => $v)
+    {{-- @elseif($tab == "posts")
+                    @foreach ($item as $k => $v)
                         <div
                             :class="selectedTab == '{{ $tab }}' || selectedTab == '{{ $tab }}' ? 'block' : 'hidden' "
                             class="w-full px-4">
@@ -66,7 +58,7 @@
                         </div>
                     @endforeach
                 @endif --}}
-            {{-- @endforeach
+    {{-- @endforeach
         @endforeach     --}}
     {{-- <div class="-mx-4 flex flex-wrap">
       <div

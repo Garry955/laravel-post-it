@@ -22,8 +22,8 @@ class Portfolio extends Component
     {
         $this->tabs = ['images','posts','card'];
         $this->posts = auth()->user()->post()->latest()->get();
-        $this->images = auth()->user()->post()->latest()->get()->toArray();
-        $this->user = auth()->user()->toArray();
+        $this->images = auth()->user()->post()->latest()->get();
+        $this->user = auth()->user();
 
         // foreach($this->items['posts'] as $k => $v) {
         //     dd($v);
