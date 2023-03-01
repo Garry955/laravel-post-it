@@ -20,7 +20,7 @@ class Portfolio extends Component
      */
     public function __construct()
     {
-        $this->tabs = ['images','posts','card'];
+        $this->tabs = ['Images','Posts','Infos'];
         $this->posts = auth()->user()->post()->latest()->get();
         $this->images = auth()->user()->post()->latest()->get();
         $this->user = auth()->user();

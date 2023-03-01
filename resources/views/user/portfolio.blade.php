@@ -1,8 +1,8 @@
 <section x-data="{
-    selectedTab: 'card',
+    selectedTab: 'Images',
     activeClasses: 'bg-primary text-white',
     inactiveClasses: 'text-body-color hover:bg-primary hover:text-white',
-}" class="pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
+}" class="py-20">
     <div class="-mx-4 flex flex-wrap justify-center">
         <div class="w-full px-4">
             <ul class="mb-12 flex flex-wrap justify-center space-x-1">
@@ -18,16 +18,24 @@
             </ul>
         </div>
     </div>
-    <div :class="selectedTab == 'posts' || selectedTab == 'posts' ? 'block' : 'hidden'" class="w-full px-4">
-        @foreach ($posts as $post)
+    <div :class="selectedTab == 'Posts' || selectedTab == 'Posts' ? 'block' : 'hidden'" class="w-full px-16">
+        @forelse ($posts as $post)
             <x-post.card :post="$post" />
-        @endforeach
+        @empty
+            <h3 class="inline-block mr-10 text-2xl">No posts yet..</h3>
+            @if((auth()->user() && auth()->user()->id != $user->id))
+              <x-button-link variant="link" href="{{ route('post.create') }}"
+                  class="text-2xl">
+                  Post something
+              </x-button-link>
+            @endif
+        @endforelse
     </div>
-    <div :class="selectedTab == 'images' || selectedTab == 'images' ? 'block' : 'hidden'" class="w-full px-4">
+    <div :class="selectedTab == 'Images' || selectedTab == 'Images' ? 'block' : 'hidden'" class="w-full px-4">
         Images
     </div>
-    <div :class="selectedTab == 'card' || selectedTab == 'card' ? 'block' : 'hidden'" class="w-full px-4">
-          <x-user.card :user="$user"/>
+    <div :class="selectedTab == 'Infos' || selectedTab == 'Infos' ? 'block' : 'hidden'" class="w-full px-4">
+        <x-user.card :user="$user" />
     </div>
     </div>
     {{-- @foreach ($items[$tab] as $key => $item)
