@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,17 +18,13 @@ class PostController extends Controller
     }
 
     // Store new post
-    public function store(Request $request) {
+    public function store(StorePostRequest $request) {
+
         //Validate
-        $formFields = $request->validate([
-            "heading" => "required|max:255",
-            "text" => "required|min:4|max:420",
-            'file' => 'mimes:jpeg,png,jpg,gif',
-        ]);
-        if(!auth()->id()) {
-            abort(403,'Unauthorized request');
-        }
+        $formFields = $request->validated();
+        
         $formFields['user_id'] = auth()->id();
+
         //File upload
         if($request->hasFile('file')) {
             $formFields['img_path'] = $request->file('file')->store('posts/user-'.auth()->id().'/','public');
@@ -35,7 +32,7 @@ class PostController extends Controller
 
         Post::create($formFields);
 
-        return redirect()->back()->with('message','Post created successfully');
+        return redirect()->route('home')->with('message','Post created successfully');
     }
 
     //Delete post
