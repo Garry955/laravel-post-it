@@ -18,7 +18,7 @@ class Navbar extends Component
         if(auth()->user()) {
             $this->navigationItems = [
                 ['label' => 'Home', 'href' => route('home')],
-                ['label' => 'Profile', 'href' => route('user.profile')],
+                ['label' => 'Profile', 'href' => route('user.profile',[auth()->user()->id])],
                 ['label' => 'Posts', 'href' => route('post.create')],
                 ['label' => 'Friends', 'href' => route('home')],
                 ['label' => 'Logout', 'href' => route('logout')],

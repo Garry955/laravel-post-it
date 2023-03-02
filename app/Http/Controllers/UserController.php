@@ -17,27 +17,6 @@ class UserController extends Controller
     }
     //Show single user profile
     public function show(User $user) {
-        // if(auth()->user()) {
-        //     $statuses = auth()->user()->getFriendStatus($user);
-        //     if(!empty($statuses['userRequestedMe'])) {
-        //         $status['relationId'] = $statuses['userRequestedMe'][0]['id'];
-        //         $status['accepted'] = $statuses['userRequestedMe'][0]['accepted'];
-        //         $date = strtotime($statuses['userRequestedMe'][0]['updated_at']);
-        //         $status['date'] = date('M.d/G:i', $date);
-        //         $status['userRequestedMe'] = true;
-        //     } elseif (!empty($statuses['iRequestedUser'])) {
-        //         $status['relationId'] = $statuses['iRequestedUser'][0]['id'];
-        //         $status['accepted'] = $statuses['iRequestedUser'][0]['accepted'];
-        //         $date = strtotime($statuses['iRequestedUser'][0]['updated_at']);
-        //         $status['date'] = date('M.d/G:i', $date);
-        //         $status['userRequestedMe'] = false;
-        //     } else {
-        //         $status = 0;
-        //     }
-        // } else {
-        //     $status = 0;
-        // }
-
         $status = '';
 
         //Returns all the friends id in array who sent request to auth()->user()
