@@ -20,6 +20,9 @@ Friendship relations between users,
 - Separate some backend structures:
     * Add Request validators
     * maybe reconfigure and reconsider routes
+- Queries seems to be duplicated (idk how but will get back to it)
+    * maybe cache them ?
+- View renders slow/sometimes not work at first try(???)
 - Update seeder, implement seeder, maybe some Rules
 - Create admin panel (include package?)
 - Implement live chat (livewire)
