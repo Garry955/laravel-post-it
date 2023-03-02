@@ -2,23 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Friend;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use PhpParser\Node\Stmt\If_;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    // Show edit profile form
-    public function edit() {
+    /**
+     * Show edit user profile form with currently authenticated user
+     * 
+     * @return View
+     */
+
+    public function edit()
+    {
         return view('user.edit', ['user' => auth()->user()]);
     }
 
 
-    //Show single user profile
-    public function show(User $user) {
+    /**
+     * Show selected User
+     * - with datas : User - $user; String - $status; Recent 5 posts by User - $posts
+     * @todo Friend section
+     * @param User $user
+     * @return View
+     */
+    public function show(User $user)
+    {
         $status = '';
 
         //Returns all the friends id in array who sent request to auth()->user()
@@ -28,11 +40,11 @@ class UserController extends Controller
         //Returns all the friends id in array who i have sent requests
         $sentRequests = auth()->user()->sentRequests()->pluck('user_id')->toArray();
 
-        if(in_array($user->id,$friendRequests)) {
+        if (in_array($user->id, $friendRequests)) {
             $status = 'user_requested';
-        } elseif(in_array($user->id, $myFriends)) {
+        } elseif (in_array($user->id, $myFriends)) {
             $status = 'my_friend';
-        } elseif(in_array($user->id, $sentRequests)) {
+        } elseif (in_array($user->id, $sentRequests)) {
             $status = 'friend_requested';
         }
 
@@ -44,21 +56,19 @@ class UserController extends Controller
     }
 
 
-    // Store user @database // Register
-    public function store(Request $request) {
+    /**
+     * Store user function / register
+     * Log in user if success
+     * @param StoreUserRequest $request
+     * @return Redirect
+     */
+    public function store(StoreUserRequest $request)
+    {
         //Validation
-        $formFields = $request->validate([
-            'name' => 'required|max:42',
-            'username' => ['required',Rule::unique('users','username')],
-            'file' => 'mimes:jpeg,png,jpg,gif',
-            'gender' => 'required',
-            'city' => 'required',
-            'email' => ['required','email',Rule::unique('users','email')],
-            'description' => 'max:420',
-            'password' => 'required|min:8|max:42|confirmed'
-        ]);
+        $formFields = $request->validated();
+     
         //File upload
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             $formFields['user_img_path'] = $request->file('file')->hashName();
             // dd($formFields['user_img_path']);
             // $formFields['user_img_path'] = $request->file('user_img')->store('profile/','public');
@@ -68,51 +78,51 @@ class UserController extends Controller
         //Store user in db
         $user = User::create($formFields);
 
-        //File upload
-        if($request->hasFile('file')) {
-            $request->file('file')->store('profile/user-'. $user->id.'/','public');
+        //File upload || catching created user id
+        if ($request->hasFile('file')) {
+            $request->file('file')->store('profile/user-' . $user->id . '/', 'public');
         }
 
         //Log in user
         auth()->login($user);
         // redirect to homepage
-        return to_route('home')->with('message', 'Refistered and logged in successfully');
+        return to_route('/')->with('message', 'Refistered and logged in successfully');
     }
 
-    //update user datas
-    public function update(Request $request, User $user) {
+    /**
+     * Update user profile datas
+     *
+     * @param UpdateUserRequest $request
+     * @return Redirect
+     */
+    public function update(UpdateUserRequest $request)
+    {
+        //Define current user
+        $user = auth()->user();
         //Validation
-        $formFields = $request->validate([
-            'name' => 'required|max:42',
-            'gender' => 'required',
-            'username' => ['required', Rule::when($request->username != $user->username, Rule::unique('users','username'))],
-            'city' => 'required',
-            'email' => 'required|email',
-            'description' => 'max:420',
-            'password' => 'required|min:8|max:42|confirmed'
-        ]);
+        $formFields = $request->validated();
         //File upload
-        if($request->hasFile('user_img')) {
-            $formFields['user_img_path'] = $request->file('user_img')->store('profile','public');
-        } else {
-            $formFields['user_img_path'] = $user->user_img_path;
+        if ($request->hasFile('user_img')) {
+            $formFields['user_img_path'] = $request->file('user_img')->store('profile', 'public');
         }
         // Bcrypt password
         $formFields['password'] = bcrypt($formFields['password']);
         // Update user
         $user->update($formFields);
         //Redirect back
-        return redirect()->back()->with('message', 'Updated successfully');
+        return to_route('user.edit',auth()->user()->id)->with('message', 'Updated successfully');
     }
-    
+
     //Delete user
-    public function destroy(User $user) {
+    public function destroy(User $user)
+    {
         $user->delete();
         return redirect('/')->with('message', 'Profile deleted successfully');
     }
 
-   // List posts by user id
-    public function listPosts(User $user) {
+    // List posts by user id
+    public function listPosts(User $user)
+    {
         return view('user.posts', [
             'posts' => Post::latest()->where('user_id', $user->id)->simplePaginate(10),
             'user' => $user

@@ -1,3 +1,7 @@
+@if($errors->any())
+    {!! implode('', $errors->all('<div>:message</div>')) !!}
+@endif
+
 <x-app-layout>
     <x-layout.hero>
         <h1 class="mb-10 text-4xl">
@@ -20,6 +24,7 @@
             value="{{ auth()->user()->email }}" />
         <x-form.form-input type="text" labelText="City" name="city" placeholder="City"
         value="{{ auth()->user()->city }}" />
+        <x-form.radio-input values="Man,Woman" labelText="Gender" name="gender"/>
         <x-form.text-area labelText="Description" name="description">
             {{ auth()->user()->description }}
         </x-form.text-area>
@@ -27,7 +32,7 @@
             <i class="fa-sharp fa-solid fa-circle-info text-2xl mr-2"></i>
             Notice: Any changes require your current password to be modified.
         </p>
-        <x-form.form-input type="password" labelText="Current password" name="old_password" placeholder="Current password"/>
+        <x-form.form-input type="password" labelText="Current password" name="current_password" placeholder="Current password"/>
         <x-form.form-input type="password" labelText="New password" name="password" placeholder="New password"/>
         <x-form.form-input type="password" labelText="New password confirmation" name="password_confirmation" placeholder="New password confirmation"/>
         

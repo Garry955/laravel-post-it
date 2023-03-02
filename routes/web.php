@@ -46,7 +46,7 @@ Route::controller(AuthController::class)->prefix('auth')->group(function() {
 //USERS
 Route::controller(UserController::class)->name('user.')->group(function() {
     // Store new user
-    Route::post('/store', 'store')->name('store')->middleware('guest');
+    Route::post('user/store', 'store')->name('store');
     // Show edit profile form
     Route::get('/profile/edit','edit')->name('edit')->middleware('auth');
     // Update user data
