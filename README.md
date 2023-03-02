@@ -13,13 +13,18 @@ Friendship relations between users,
 
 # @TODO:
 - Finish View components and view endpoints
+- Create albums for images? Posts might be enough for now
+- Create comments section under posts
 - Reconfigure codes @ backend for simplicity and readability
-- Create albums for images
 - Create post likes structure
 - Separate some backend structures:
     * Add Request validators
-    * maybe reconfigure routes and reconsider routes
+    * maybe reconfigure and reconsider routes
 - Update seeder, implement seeder, maybe some Rules
-- Implement live chat
+- Create admin panel (include package?)
+- Implement live chat (livewire)
+- Image upload preview (livewire)
+- View is now desktop only, create mobile/tablet views
+- Dark/light mode toggle
 
-might try to replace frontend with VUE & tailwind
+might try to replace frontend with VUE & tailwind || Livewire & tailwind
