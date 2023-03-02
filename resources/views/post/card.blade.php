@@ -5,11 +5,16 @@
      hover:transform hover:scale-105 hover:shadow-primary hover:shadow-inner ease-in-out duration-500">
     <div class="container flex flex-wrap w-full px-7">
         <div class="flex w-full justify-between mb-4">
-            <a href="/user/{{ $post->user->id }}/show" class="text-[25px] text-primary hover:text-white inline-block">
+
+            {{-- button link pls --}}
+            <x-button-link href="{{ route('user.profile', [$post->user->id]) }}" variant="link">
                 <img class="w-12 inline mr-1 rounded-full"
                     src="{{ $post->user->user_img_path ? asset('/storage/profile/user-' . $post->user->id . '/' . $post->user->user_img_path) : asset('/storage/images/user-default.jpg') }}">
                 {{ $post->user->name }}
-            </a>
+            </x-button-link>
+            {{-- <a href="/user/{{ $post->user->id }}/show" class="text-[25px] text-primary hover:text-white inline-block">
+            </a> --}}
+
             <div class="text-base inline-block italic">
                 <time class="w-full block">{{ $post->created_at->format('M.d / G:i') }}</time>
                 <span class="w-full block text-right text-primary">{{ $post->user->city }}</span>
@@ -36,7 +41,8 @@
                     class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Modify</x-button-link>
             <x-form.form id="delete_post" route="{{ route('post.delete', $post) }}" method="delete"
                 class="inline-block ml-5">
-                <x-form.button variant="red" class="py-1"><i class="fa-solid fa-trash-can mr-2"></i>Delete</x-form.button>
+                <x-form.button variant="red" class="py-1"><i class="fa-solid fa-trash-can mr-2"></i>Delete
+                </x-form.button>
             </x-form.form>
         </div>
     @endif
