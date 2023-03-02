@@ -44,11 +44,11 @@ Route::controller(AuthController::class)->prefix('auth')->group(function() {
 });
 
 //USERS
-Route::controller(UserController::class)->prefix('user')->name('user.')->group(function() {
+Route::controller(UserController::class)->name('user.')->group(function() {
     // Store new user
     Route::post('/store', 'store')->name('store')->middleware('guest');
     //Show selected user profile
-    Route::get('/profile','show')->name('profile');
+    Route::get('/profile/{user}','show')->name('profile');
     // Show edit profile form
     // Route::get('/profile/{user}','edit')->name('profile')->middleware('auth');
     
@@ -59,8 +59,6 @@ Route::controller(UserController::class)->prefix('user')->name('user.')->group(f
     // Destroy user
     Route::delete('user/{user}/delete','destroy')->name('deleteUser')->middleware('auth');
 });
-
-
 
 
 //FRIENDS
