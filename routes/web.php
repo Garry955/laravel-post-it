@@ -47,15 +47,15 @@ Route::controller(AuthController::class)->prefix('auth')->group(function() {
 Route::controller(UserController::class)->name('user.')->group(function() {
     // Store new user
     Route::post('/store', 'store')->name('store')->middleware('guest');
-    //Show selected user profile
-    Route::get('/profile/{user}','show')->name('profile');
     // Show edit profile form
-    // Route::get('/profile/{user}','edit')->name('profile')->middleware('auth');
+    Route::get('/profile/edit','edit')->name('edit')->middleware('auth');
+    // Update user data
+    Route::put('/profile/update','update')->name('update')->middleware('auth');
+    //Show selected user profile --- SHOULD BE ON BOTTOM !!!
+    Route::get('/profile/{user}','show')->name('profile');
     
     //List posts by user 
     Route::get('/user/{user}/posts','listPosts');
-    // Update user data
-    Route::put('/user/{user}/update','update')->name('updateUser')->middleware('auth');
     // Destroy user
     Route::delete('user/{user}/delete','destroy')->name('deleteUser')->middleware('auth');
 });

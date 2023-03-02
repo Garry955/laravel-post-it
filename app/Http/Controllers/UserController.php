@@ -12,9 +12,11 @@ use PhpParser\Node\Stmt\If_;
 class UserController extends Controller
 {
     // Show edit profile form
-    public function edit(User $user) {
-        return view('user.edit', ['user' => $user]);
+    public function edit() {
+        return view('user.edit', ['user' => auth()->user()]);
     }
+
+
     //Show single user profile
     public function show(User $user) {
         $status = '';

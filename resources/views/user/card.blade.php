@@ -37,6 +37,11 @@
             <label class="text-[22px] text-primary">@ {{ $user->city }}</label>
             <label class="">69 Friend(s)</label>
             <label class="">420 Post(s)</label>
+            @if(auth()->user() && auth()->user()->id === $user->id)
+                <x-button-link href="{{ route('user.edit') }}" variant="link" class="mt-8">
+                    Update your profile
+                </x-button-link>
+            @endif
         @endif
     </div>
 </div>
