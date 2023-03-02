@@ -9,7 +9,6 @@ class Portfolio extends Component
 {
 
     public  $posts;
-    public $user;
     public array $tabs = [];
 
     /**
@@ -17,11 +16,11 @@ class Portfolio extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(public $user)
     {
         $this->tabs = ['Posts','Details'];
-        $this->posts = auth()->user()->post()->latest()->get();
-        $this->user = auth()->user();
+        $this->posts = $user->post()->latest()->simplePaginate(10);
+        $this->user = $user;
 
         // foreach($this->items['posts'] as $k => $v) {
         //     dd($v);

@@ -5,7 +5,6 @@
         </h1>
         @if(auth()->user() && auth()->user()->id != $user->id)
             <div class="friend mb-5">
-                {{-- {{ auth()->user()->id }} --}}
                 @switch($status)
                     @case('user_requested')
                         <p>{{ $user->name }} has sent you a friend request.</p>
