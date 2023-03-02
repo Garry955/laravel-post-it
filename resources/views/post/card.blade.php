@@ -36,7 +36,7 @@
                     class="fa-sharp fa-solid fa-pen-to-square mr-2"></i>Modify</x-button-link>
             <x-form.form id="delete_post" route="{{ route('post.delete', $post) }}" method="delete"
                 class="inline-block ml-5">
-                <x-form.button variant="red"><i class="fa-solid fa-trash-can mr-2"></i>Delete</x-form.button>
+                <x-form.button variant="red" class="py-1"><i class="fa-solid fa-trash-can mr-2"></i>Delete</x-form.button>
             </x-form.form>
         </div>
     @endif

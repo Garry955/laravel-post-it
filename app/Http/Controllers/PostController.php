@@ -61,16 +61,8 @@ class PostController extends Controller
     }
 
     // Update post
-    public function update(Request $request, Post $post) {
-        //Validate
-        $formFields = $request->validate([
-            "heading" => "required|max:255",
-            "text" => "required|min:4|max:420",
-            'file' => 'mimes:jpeg,png,jpg,gif',
-        ]);
-        if(!auth()->id()) {
-            abort(403,'Unauthorized request');
-        }
+    public function update(StorePostRequest $request, Post $post) {
+        $formFields = $request->validated();
         $formFields['user_id'] = auth()->id();
         //File upload
         if($request->hasFile('file')) {
