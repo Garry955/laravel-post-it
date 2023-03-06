@@ -1,12 +1,12 @@
-@if($errors->any())
+{{-- @if ($errors->any())
     {!! implode('', $errors->all('<div>:message</div>')) !!}
-@endif
-
+@endif --}}
 <x-app-layout>
     <x-layout.hero>
         <h1 class="mb-10 text-4xl">
-            Update your profile 
-            <x-button-link href="{{ route('user.profile',auth()->user()->id) }}" variant="link" class="absolute top-0 right-0">
+            Update your profile
+            <x-button-link href="{{ route('user.profile', auth()->user()->id) }}" variant="link"
+                class="absolute top-0 right-0">
                 {{ auth()->user()->name }}
             </x-button-link>
         </h1>
@@ -17,25 +17,27 @@
 
         <x-form.file-input labelText="Upload picture" />
         <x-form.form-input type="text" labelText="Name" name="name" placeholder="Name"
-            value="{{ auth()->user()->name }}" />
+            value="{{ old('name') ? old('name') : auth()->user()->name }}" />
         <x-form.form-input type="text" labelText="Username" name="username" placeholder="Username"
-            value="{{ auth()->user()->username }}" />
+            value="{{ old('username') ? old('username') : auth()->user()->username }}" />
         <x-form.form-input type="email" labelText="E-mail" name="email" placeholder="E-mail"
-            value="{{ auth()->user()->email }}" />
+            value="{{ old('email') ? old('email') : auth()->user()->email }}" />
         <x-form.form-input type="text" labelText="City" name="city" placeholder="City"
-        value="{{ auth()->user()->city }}" />
-        <x-form.radio-input values="Man,Woman" labelText="Gender" name="gender"/>
+            value="{{ old('city') ? old('city') : auth()->user()->city }}" />
+        <x-form.radio-input values="Man,Woman" labelText="Gender" name="gender" />
         <x-form.text-area labelText="Description" name="description">
-            {{ auth()->user()->description }}
+            {{ old('description') ? old('description') : auth()->user()->description }}
         </x-form.text-area>
         <p class="text-red-500 leading-loose">
             <i class="fa-sharp fa-solid fa-circle-info text-2xl mr-2"></i>
             Notice: Any changes require your current password to be modified.
         </p>
-        <x-form.form-input type="password" labelText="Current password" name="current_password" placeholder="Current password"/>
-        <x-form.form-input type="password" labelText="New password" name="password" placeholder="New password"/>
-        <x-form.form-input type="password" labelText="New password confirmation" name="password_confirmation" placeholder="New password confirmation"/>
-        
+        <x-form.form-input type="password" labelText="Current password" name="current_password"
+            placeholder="Current password" />
+        <x-form.form-input type="password" labelText="New password" name="password" placeholder="New password" />
+        <x-form.form-input type="password" labelText="New password confirmation" name="password_confirmation"
+            placeholder="New password confirmation" />
+
         <x-form.button class="py-3 my-14">Update</x-form.button>
     </x-form.form>
 </x-app-layout>

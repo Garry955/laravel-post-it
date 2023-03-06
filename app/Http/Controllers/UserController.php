@@ -66,7 +66,7 @@ class UserController extends Controller
     {
         //Validation
         $formFields = $request->validated();
-     
+
         //File upload
         if ($request->hasFile('file')) {
             $formFields['user_img_path'] = $request->file('file')->hashName();
@@ -101,16 +101,25 @@ class UserController extends Controller
         $user = auth()->user();
         //Validation
         $formFields = $request->validated();
+
+
         //File upload
-        if ($request->hasFile('user_img')) {
-            $formFields['user_img_path'] = $request->file('user_img')->store('profile', 'public');
+        if ($request->hasFile('file')) {
+            $request->file('file')->store('profile/user-' . auth()->user()->id . '/', 'public');
+            $formFields['user_img_path'] = $request->file('file')->hashName();
         }
         // Bcrypt password
-        $formFields['password'] = bcrypt($formFields['password']);
+        $formFields['password'] =
+         (!is_null($request->password)) ? bcrypt($formFields['password']) : bcrypt($formFields['current_password']);
+        // if(!is_null($request->password)) {
+        //     $formFields['password'] = bcrypt($formFields['password']);
+        // } else {
+        //     $formFields['password'] = bcrypt($formFields['password']);            
+        // }
         // Update user
         $user->update($formFields);
         //Redirect back
-        return to_route('user.edit',auth()->user()->id)->with('message', 'Updated successfully');
+        return to_route('user.edit', auth()->user()->id)->with('message', 'Updated successfully');
     }
 
     //Delete user

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MatchOldPassword;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,17 +25,15 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->request);
-
+        // dd($this->request);
         return [
             'name' => 'required|max:255|min:4',
             'gender' => 'required',
-            'username' => ['required','min:4','max:255', Rule::unique('users', 'username')->ignore(auth()->user())],
+            'username' => ['required', 'min:4', 'max:255', Rule::unique('users', 'username')->ignore(auth()->user())],
             'city' => 'required|max:255',
             'email' => 'required|email|max:255',
             'description' => 'nullable|max:420',
-            // @todo Implement MatchOldPassword rule 
-            'current_password' => 'required|min:8|max:42|current_password',
+            'current_password' => ['required', new MatchOldPassword],
             'password' => $this->password != null ? 'sometimes|min:8|max:42|confirmed' : '',
         ];
     }
