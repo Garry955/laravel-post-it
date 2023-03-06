@@ -21,11 +21,6 @@ class Portfolio extends Component
         $this->tabs = ['Posts','Details'];
         $this->posts = $user->post()->latest()->simplePaginate(10);
         $this->user = $user;
-
-        // foreach($this->items['posts'] as $k => $v) {
-        //     dd($v);
-        // }
-        // $this->tabs = Arr::flatten(Arr::pluck($this->items,'tab'));
     }
 
     /**

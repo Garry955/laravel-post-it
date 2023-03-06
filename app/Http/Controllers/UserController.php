@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 
@@ -24,36 +23,15 @@ class UserController extends Controller
 
     /**
      * Show selected User
-     * - with datas : User - $user; String - $status; Recent 5 posts by User - $posts
+     * 
      * @todo Friend section
      * @param User $user
      * @return View
      */
     public function show(User $user)
     {
-        $status = '';
-
-        if (auth()->user()) {
-            //Returns all the friends id in array who sent request to auth()->user()
-            $friendRequests = auth()->user()->friendRequests()->pluck('friend_id')->toArray();
-            //Returns all the friends id in array
-            $myFriends = auth()->user()->myFriends()->pluck('friend_id')->toArray();
-            //Returns all the friends id in array who i have sent requests
-            $sentRequests = auth()->user()->sentRequests()->pluck('user_id')->toArray();
-
-            if (in_array($user->id, $friendRequests)) {
-                $status = 'user_requested';
-            } elseif (in_array($user->id, $myFriends)) {
-                $status = 'my_friend';
-            } elseif (in_array($user->id, $sentRequests)) {
-                $status = 'friend_requested';
-            }
-        }
-
         return view('user.profile', [
             'user' => $user,
-            'status' => $status,
-            'posts' => auth()->user()->post(),
         ]);
     }
 

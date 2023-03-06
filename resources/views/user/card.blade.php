@@ -42,6 +42,8 @@
                     Update your profile
                 </x-button-link>
             @endif
+            {{-- Friend Control Buttons --}}
+            <x-user.friend-controller :user="$user" />
             
         @endif
     </div>
