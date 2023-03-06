@@ -3,14 +3,20 @@
 ## Laravel post-it project
 
 # This project is only for learning purposes
-# Don't forget to npm install to load dependencies
+# Installation, Dependencies
 The project uses Laravel, TailwindCss, AlpineJS
-
-Basic Authentication provided by Laravel, 
-User CRUD functionality, 
-Post CRUD functionality, 
-Friendship relations between users, 
-
+- PHP ^8.0.2
+- Run > npm install to load dependencies
+- Create database table name "post-it" with root user to implement migrations
+- Run > php artisan migrate --seed to seed with dummy users and related dummy posts
+- Run > php artisan serve to start local server : requires local server like apache/xampp
+- Run > npm run dev to start vite server and build components continously
+**
+Basic Authentication provided by Laravel,  
+User CRUD functionality,     
+Post CRUD functionality,    
+Friendship relations between users,    
+**
 # @TODO:
 - Finish View components and view endpoints
 - Create albums for images? Posts might be enough for now
