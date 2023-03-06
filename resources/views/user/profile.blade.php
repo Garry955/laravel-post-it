@@ -2,7 +2,7 @@
     <x-layout.hero>
         <h1 class="mb-10 text-4xl">
             <label class="text-green-500">
-                {{ auth()->user() && auth()->user()->id != $user->id ? 'Profile of ' . $user->name : 'Your profile' }}
+                {{ (!auth()->user() || auth()->user() && auth()->user()->id != $user->id) ? 'Profile of ' . $user->name : 'Your profile' }}
             </label>
         </h1>
     </x-layout.hero>

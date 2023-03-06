@@ -42,6 +42,7 @@
                     Update your profile
                 </x-button-link>
             @endif
+            
         @endif
     </div>
 </div>

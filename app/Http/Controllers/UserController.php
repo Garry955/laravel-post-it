@@ -33,25 +33,27 @@ class UserController extends Controller
     {
         $status = '';
 
-        //Returns all the friends id in array who sent request to auth()->user()
-        $friendRequests = auth()->user()->friendRequests()->pluck('friend_id')->toArray();
-        //Returns all the friends id in array
-        $myFriends = auth()->user()->myFriends()->pluck('friend_id')->toArray();
-        //Returns all the friends id in array who i have sent requests
-        $sentRequests = auth()->user()->sentRequests()->pluck('user_id')->toArray();
+        if (auth()->user()) {
+            //Returns all the friends id in array who sent request to auth()->user()
+            $friendRequests = auth()->user()->friendRequests()->pluck('friend_id')->toArray();
+            //Returns all the friends id in array
+            $myFriends = auth()->user()->myFriends()->pluck('friend_id')->toArray();
+            //Returns all the friends id in array who i have sent requests
+            $sentRequests = auth()->user()->sentRequests()->pluck('user_id')->toArray();
 
-        if (in_array($user->id, $friendRequests)) {
-            $status = 'user_requested';
-        } elseif (in_array($user->id, $myFriends)) {
-            $status = 'my_friend';
-        } elseif (in_array($user->id, $sentRequests)) {
-            $status = 'friend_requested';
+            if (in_array($user->id, $friendRequests)) {
+                $status = 'user_requested';
+            } elseif (in_array($user->id, $myFriends)) {
+                $status = 'my_friend';
+            } elseif (in_array($user->id, $sentRequests)) {
+                $status = 'friend_requested';
+            }
         }
 
         return view('user.profile', [
             'user' => $user,
             'status' => $status,
-            'posts' => Post::latest()->where('user_id', $user->id)->limit(5)->get(),
+            'posts' => auth()->user()->post(),
         ]);
     }
 
@@ -108,28 +110,24 @@ class UserController extends Controller
         }
         // Bcrypt password
         $formFields['password'] =
-         (!is_null($request->password)) ? bcrypt($formFields['password']) : bcrypt($formFields['current_password']);
+            (!is_null($request->password)) ? bcrypt($formFields['password']) : bcrypt($formFields['current_password']);
         // Update user
         $user->update($formFields);
         //Redirect back
-        return to_route('user.edit', auth()->user()->id)->with('message', 'Updated successfully');
+        return to_route('user.edit')->with('message', 'Updated successfully');
     }
 
-    //Delete user
+    /**
+     * Delete User $user
+     *
+     * @param User $user
+     * @return Redirect
+     */
     public function destroy(User $user)
     {
         $user->delete();
         return redirect('/')->with('message', 'Profile deleted successfully');
     }
-
-    // List posts by user id || @todo DO I NEED THIS?
-    // public function listPosts(User $user)
-    // {
-    //     return view('user.posts', [
-    //         'posts' => auth()->user()->post(),
-    //         'user' => $user
-    //     ]);
-    // }
 }
 
 //Common routes:

@@ -57,7 +57,7 @@ Route::controller(UserController::class)->name('user.')->group(function() {
     Route::get('/profile/{user}','show')->name('profile');
     
     // //List posts by user @todo DO I NEED THIS?
-    // Route::get('/user/{user}/posts','listPosts');
+    Route::get('/user/{user}/posts','listPosts');
 });
 
 
