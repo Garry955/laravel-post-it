@@ -41,9 +41,8 @@
     <x-form.form id="delete_profile" route="{{ route('user.delete', auth()->user()->id) }}" method="delete"
         class="pb-16 w-4/5 mx-auto">
         {{-- TODO: AlpineJs confirm delete popup or smth. --}}
-        <x-form.button variant="red" class="py-3"
-            @click=" confirm('Are you sure?') ? @this.user.delete({{ auth()->user()->id }}) : false"><i
-                class="fa-solid fa-trash-can mr-2"></i>Delete Profile
+        <x-form.button variant="red" class="py-3" x-on:click="isModalOpen = true">
+            <i class="fa-solid fa-trash-can mr-2"></i>Delete Profile
         </x-form.button>
     </x-form.form>
 </x-app-layout>
