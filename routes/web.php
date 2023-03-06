@@ -51,13 +51,13 @@ Route::controller(UserController::class)->name('user.')->group(function() {
     Route::get('/profile/edit','edit')->name('edit')->middleware('auth');
     // Update user data
     Route::put('/profile/update','update')->name('update')->middleware('auth');
+    // Destroy user
+    Route::delete('profile/{user}/delete','destroy')->name('delete')->middleware('auth');
     //Show selected user profile --- SHOULD BE ON BOTTOM !!!
     Route::get('/profile/{user}','show')->name('profile');
     
-    //List posts by user 
-    Route::get('/user/{user}/posts','listPosts');
-    // Destroy user
-    Route::delete('user/{user}/delete','destroy')->name('deleteUser')->middleware('auth');
+    // //List posts by user @todo DO I NEED THIS?
+    // Route::get('/user/{user}/posts','listPosts');
 });
 
 

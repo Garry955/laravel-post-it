@@ -101,8 +101,6 @@ class UserController extends Controller
         $user = auth()->user();
         //Validation
         $formFields = $request->validated();
-
-
         //File upload
         if ($request->hasFile('file')) {
             $request->file('file')->store('profile/user-' . auth()->user()->id . '/', 'public');
@@ -111,11 +109,6 @@ class UserController extends Controller
         // Bcrypt password
         $formFields['password'] =
          (!is_null($request->password)) ? bcrypt($formFields['password']) : bcrypt($formFields['current_password']);
-        // if(!is_null($request->password)) {
-        //     $formFields['password'] = bcrypt($formFields['password']);
-        // } else {
-        //     $formFields['password'] = bcrypt($formFields['password']);            
-        // }
         // Update user
         $user->update($formFields);
         //Redirect back
@@ -129,14 +122,14 @@ class UserController extends Controller
         return redirect('/')->with('message', 'Profile deleted successfully');
     }
 
-    // List posts by user id
-    public function listPosts(User $user)
-    {
-        return view('user.posts', [
-            'posts' => Post::latest()->where('user_id', $user->id)->simplePaginate(10),
-            'user' => $user
-        ]);
-    }
+    // List posts by user id || @todo DO I NEED THIS?
+    // public function listPosts(User $user)
+    // {
+    //     return view('user.posts', [
+    //         'posts' => auth()->user()->post(),
+    //         'user' => $user
+    //     ]);
+    // }
 }
 
 //Common routes:
