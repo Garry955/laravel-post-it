@@ -10,7 +10,7 @@ The project uses Laravel, TailwindCss, AlpineJS
 - Create database table name "post-it" with root user to implement migrations
 - Run > php artisan migrate --seed to seed with dummy users and related dummy posts
 - Run > php artisan serve to start local server : requires local server like apache/xampp
-- Run > npm run dev to start vite server and build components continously
+- Run > npm run dev to start vite server and build components continously      
 **
 Basic Authentication provided by Laravel,  
 User CRUD functionality,     
