@@ -72,6 +72,12 @@ class FriendController extends Controller
         return redirect()->back()->with('message', 'You are now friends with' . $user->name);
     }
 
+    /**
+     * Detaches the given User::id from the auth()user()->id and opposite
+     *
+     * @param User $user
+     * @return redirect
+     */
     public function unFriendUser(User $user)
     {
         auth()->user()->friends()->detach($user->id);
@@ -79,22 +85,17 @@ class FriendController extends Controller
         $user->friends()->detach(auth()->id());
 
         return redirect()->back()->with('message', 'Removed' . $user->name . 'from friend list');
-
-        dd($user);
     }
 
+    /**
+     * Detaches the give User::id from auth()->user()->id
+     *
+     * @param User $user
+     * @return Redirect
+     */
     public function cancelRequest(User $user)
     {
         auth()->user()->friends()->detach($user->id);
         return redirect()->back()->with('message', 'Friend request to ' . $user->name . 'removed');
     }
 }
-
-//Common routes:
-//index - show all listings
-//show - show single listing
-//create - show form to create new listing
-//store - store new listing
-//edit - show form to edit listing
-//update - update listing
-//destroy - delete listing

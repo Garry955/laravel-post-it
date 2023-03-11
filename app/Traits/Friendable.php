@@ -9,9 +9,10 @@ trait Friendable {
     public function friendRequests() {
         return $this->belongsToMany(self::class, 'friends', 'friend_id', 'user_id')->wherePivot('status','pending');
     }
-
+    
     public function sentRequests() {
         return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->wherePivot('status','pending');
+        // return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->wherePivot('status','pending');
     }
 
     public function myFriends() {

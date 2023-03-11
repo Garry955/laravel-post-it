@@ -6,7 +6,7 @@
             </label>
         </h1>
     </x-layout.hero>
-    <x-friend.friend-list/>
+    <x-friend.friend-list :user="$user"/>
     {{-- @forelse ($friends as $friend)
         {{ $friend }}
     @empty
