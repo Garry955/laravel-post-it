@@ -23,32 +23,51 @@ class FriendController extends Controller
         ]);
     }
 
-    //Inserts relation to friends table where friend_id is auth()->user()->id and user_id is the requested user
+    /**
+     * Sync the auth()->user()->id to the given User::id without detaching if anything else exists
+     * Allows to send multiple request from the User
+     *
+     * @param User $user
+     * @return Redirect
+     */
     public function sendFriendRequest(User $user)
     {
-        auth()->user()->friends()->sync($user->id);
+        auth()->user()->friends()->syncWithoutDetaching($user->id);
 
         return redirect()->back()->with('message', 'Friend request to ' . $user->name . ' sent');
     }
 
+    /**
+     * Rejects and detaches the existing relation in the Friend pivot table
+     *
+     * @param User $user
+     * @return Redirect
+     */
     public function rejectFriendRequest(User $user)
     {
-        auth()->user()->friends()->detach($user->id);
+        $user->friends()->detach(auth()->user()->id);
 
         return redirect()->back()->with('message', 'Friend request from ' . $user->name . ' has been cancelled');
     }
 
+    /**
+     * Accepts and updates existing pivot status to accepted
+     * Executes the current date time to the friends_since field
+     *
+     * @param User $user
+     * @return redirect
+     */
     public function acceptFriendRequest(User $user)
     {
-        auth()->user()->friends()->updateExistingPivot($user->id, [
+        $user->friends()->updateExistingPivot(auth()->user()->id, [
             'status' => 'accepted',
             'friends_since' => now()->toDateString(),
         ]);
 
-        $user->friends()->sync([auth()->id() => [
-            'status' => 'accepted',
-            'friends_since' => now()->toDateString(),
-        ]]);
+        // $user->friends()->sync([auth()->id() => [
+        //     'status' => 'accepted',
+        //     'friends_since' => now()->toDateString(),
+        // ]]);
 
         return redirect()->back()->with('message', 'You are now friends with' . $user->name);
     }
@@ -66,7 +85,7 @@ class FriendController extends Controller
 
     public function cancelRequest(User $user)
     {
-        $user->friends()->detach(auth()->id());
+        auth()->user()->friends()->detach($user->id);
         return redirect()->back()->with('message', 'Friend request to ' . $user->name . 'removed');
     }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace App\Traits;
 
-use Illuminate\Support\Arr;
-
 trait Friendable {
     public function friends() {
         return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->withTimestamps();
