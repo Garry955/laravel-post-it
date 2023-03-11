@@ -3,8 +3,10 @@
 @empty
     No friends yet
 @endforelse --}}
+{{ $sentRequests }}
+{{ $friendRequests }}
 @forelse ($friends as $friend)
-    {{ $friend->name }}
+    {{ $friend }}
 @empty
 no friends yet.. :(
 @endforelse

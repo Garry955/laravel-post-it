@@ -3,7 +3,10 @@ namespace App\Traits;
 
 trait Friendable {
     public function friends() {
-        return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->withTimestamps();
+        // return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->withTimestamps()->withPivot();
+        
+        return $this->belongsToMany(self::class, 'friends', 'friend_id', 'user_id')
+            ->wherePivot('status','accepted')->withTimestamps()->withPivot(['user_id','friend_id']);
     }
    
     public function friendRequests() {

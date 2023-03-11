@@ -19,7 +19,7 @@ class Portfolio extends Component
     public function __construct(public $user)
     {
         $this->tabs = ['Posts','Details'];
-        $this->posts = $user->post()->latest()->simplePaginate(10);
+        $this->posts = $user->post()->with('user')->latest()->simplePaginate(10);
         $this->user = $user;
     }
 
