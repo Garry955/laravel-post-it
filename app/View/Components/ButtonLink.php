@@ -11,7 +11,7 @@ class ButtonLink extends Component
      *
      * @return void
      */
-    public function __construct(public string $href, public string $target ='self', public string $variant = "primary")
+    public function __construct(public string $href, public string $target ='_self', public string $variant = "primary")
     {
         //
     }

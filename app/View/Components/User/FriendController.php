@@ -19,14 +19,12 @@ class FriendController extends Component
 
         if (auth()->user()) {
             //Returns all the friends id in array who sent request to auth()->user()
-            $friendRequests = auth()->user()->friendRequests()->pluck('friend_id')->toArray();
+            $friendRequests = auth()->user()->friendRequests()->pluck('user_id')->toArray();
             //Returns all the friends id in array
-            $myFriends = auth()->user()->myFriends()->pluck('friend_id')->toArray();
+            $myFriends = auth()->user()->myFriends();
             //Returns all the friends id in array who i have sent requests
-            $sentRequests = auth()->user()->sentRequests()->pluck('user_id')->toArray();
+            $sentRequests = auth()->user()->sentRequests()->pluck('friend_id')->toArray();
 
-
-            
             if (in_array($user->id, $friendRequests)) {
                 $this->status = 'user_requested';
             } elseif (in_array($user->id, $myFriends)) {

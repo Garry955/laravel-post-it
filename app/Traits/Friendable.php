@@ -1,8 +1,7 @@
 <?php
 namespace App\Traits;
 
-use App\Models\User;
-use App\Models\Friend;
+use Illuminate\Support\Arr;
 
 trait Friendable {
     public function friends() {
@@ -10,16 +9,24 @@ trait Friendable {
     }
    
     public function friendRequests() {
-        return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->wherePivot('status','pending');
-    }
-
-    public function sentRequests() {
         return $this->belongsToMany(self::class, 'friends', 'friend_id', 'user_id')->wherePivot('status','pending');
     }
 
+    public function sentRequests() {
+        return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->wherePivot('status','pending');
+    }
+
     public function myFriends() {
-        return $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')->wherePivot('status','accepted');
+        
+        $from = $this->belongsToMany(self::class, 'friends', 'friend_id', 'user_id')
+            ->wherePivot('status','accepted')->withTimestamps()
+            ->pluck('user_id')->toArray();
+        $to = $this->belongsToMany(self::class, 'friends', 'user_id', 'friend_id')
+            ->wherePivot('status','accepted')->withTimestamps()
+            ->pluck('friend_id')->toArray();
+
+        return array_merge($from,$to);
+
+        // dd($all,auth()->user()->id);
     }
 }
-
-?>

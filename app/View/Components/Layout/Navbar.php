@@ -20,7 +20,7 @@ class Navbar extends Component
                 ['label' => 'Home', 'href' => route('home')],
                 ['label' => 'Profile', 'href' => route('user.profile',[auth()->user()->id])],
                 ['label' => 'Posts', 'href' => route('post.create')],
-                ['label' => 'Friends', 'href' => route('home')],
+                ['label' => 'Friends', 'href' => route('friend.listFriends', auth()->user()->id)],
                 ['label' => 'Logout', 'href' => route('logout')],
             ];
         } else {

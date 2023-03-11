@@ -9,10 +9,8 @@ class Friend extends Pivot
 {
     use HasFactory;
 
-    protected $fillable = ['friend_id','user_id','accepted','status', 'friends_since'];
+    protected $fillable = ['friend_id','user_id','status', 'friends_since'];
 
     protected $casts = ['created_at', 'updated_at'];
-
-    protected $guarding = [];
 
 }

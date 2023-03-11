@@ -63,16 +63,19 @@ Route::controller(UserController::class)->name('user.')->group(function() {
 
 //FRIENDS
 Route::controller(FriendController::class)->prefix('friend')->name('friend.')->middleware('auth')->group(function() {
+    //Friends list
+    Route::get('/{user}/friends', 'listFriends')->name('listFriends');
+    //Friend action panel
     //Send friend request
-    Route::get('user/{user}/request','sendFriendRequest')->name('sendRequest');
+    Route::get('/{user}/request','sendFriendRequest')->name('sendRequest');
     //reject friend request
-    Route::get('user/{user}/reject','rejectFriendRequest')->name('rejectRequest');
+    Route::get('/{user}/reject','rejectFriendRequest')->name('rejectRequest');
     //Accept friend request
-    Route::get('user/{user}/accept','acceptFriendRequest')->name('acceptRequest');
+    Route::get('/{user}/accept','acceptFriendRequest')->name('acceptRequest');
     //Accept friend request
-    Route::get('user/{user}/unfriend','unFriendUser')->name('unfriend');
+    Route::get('/{user}/unfriend','unFriendUser')->name('unfriend');
     //Cancel friend request
-    Route::get('user/{user}/cancel-request', 'cancelRequest')->name('cancelRequest');
+    Route::get('/{user}/cancel-request', 'cancelRequest')->name('cancelRequest');
 });
 
 //POSTS
