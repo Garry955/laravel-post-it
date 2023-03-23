@@ -30,8 +30,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // dd(auth()->user()->getTotalFriendsAttached());
-        return view('user.profile', compact('user') );
+        return view('user.profile', compact('user'));
     }
 
 
@@ -49,8 +48,6 @@ class UserController extends Controller
         //File upload
         if ($request->hasFile('file')) {
             $formFields['user_img_path'] = $request->file('file')->hashName();
-            // dd($formFields['user_img_path']);
-            // $formFields['user_img_path'] = $request->file('user_img')->store('profile/','public');
         }
         // Bcrypt password
         $formFields['password'] = bcrypt($formFields['password']);
@@ -106,12 +103,3 @@ class UserController extends Controller
         return redirect('/')->with('message', 'Profile deleted successfully');
     }
 }
-
-//Common routes:
-//index - show all listings
-//show - show single listing
-//create - show form to create new listing
-//store - store new listing
-//edit - show form to edit listing
-//update - update listing
-//destroy - delete listing

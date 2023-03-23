@@ -62,10 +62,9 @@ Route::controller(UserController::class)->name('user.')->group(function() {
 
 
 //FRIENDS
+//Friends list
+Route::get('/{user}/friends', [FriendController::class, 'index'])->name('friends')->middleware('auth');
 Route::controller(FriendController::class)->prefix('friend')->name('friend.')->middleware('auth')->group(function() {
-    //Friends list
-    Route::get('/{user}/friends', 'listFriends')->name('listFriends');
-    //Friend action panel
     //Send friend request
     Route::get('/{user}/request','sendFriendRequest')->name('sendRequest');
     //reject friend request

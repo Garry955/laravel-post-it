@@ -15,19 +15,19 @@ class Navbar extends Component
      */
     public function __construct()
     {
-        if(auth()->user()) {
+        if (auth()->user()) {
             $this->navigationItems = [
                 ['label' => 'Home', 'href' => route('home')],
-                ['label' => 'Profile', 'href' => route('user.profile',[auth()->user()->id])],
+                ['label' => 'Profile', 'href' => route('user.profile', [auth()->user()->id])],
                 ['label' => 'Posts', 'href' => route('post.create')],
-                ['label' => 'Friends', 'href' => route('friend.listFriends', auth()->user()->id)],
+                ['label' => 'Friends', 'href' => route('friends', [auth()->user()->id])],
                 ['label' => 'Logout', 'href' => route('logout')],
             ];
         } else {
             $this->navigationItems = [
                 ['label' => 'Home', 'href' => route('home')],
                 ['label' => 'Login', 'href' => route('login')],
-                ['label' => 'Register', 'href' => route('register')]  
+                ['label' => 'Register', 'href' => route('register')]
             ];
         }
     }

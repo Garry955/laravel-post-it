@@ -3,12 +3,13 @@
 namespace App\View\Components\Friend;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class FriendList extends Component
 {
-    public Collection $friends, $friendRequests, $sentRequests;
+    public $friends;
+    public $sentRequests;
+    public $friendRequests;
 
     /**
      * Create a new component instance.
@@ -17,17 +18,19 @@ class FriendList extends Component
      */
     public function __construct(public User $user)
     {
-        // dd($user->friends()->get(),auth()->user()->id);
-        $this->friends = $user->friends()?->get();
-        //Returns all the Users who is friends with User $user
-        // $this->friends = $this->user->friends();
-        // $this->friends = User::whereIn('id', $this->user->myFriends())?->get($this->fields);
-        //Check if selected user is the auth()->user() before getting data
-        if (auth()->user()->id === $user->id) {
-            //Returns all the Users who sent request to User $user
-            $this->friendRequests = $user->friendRequests()?->get();
-            //Returns all the Users who User $user received request from
-            $this->sentRequests = $user->sentRequests()?->get();
+        $_friends = $user->getTotalUsersAttached() ?? null;
+        if (!empty($_friends)) {
+            foreach ($_friends as $friend) {
+                if ($friend->pivot->status == 'accepted') {
+                    $this->friends = collect($friend);
+                } elseif ($friend->pivot->status == 'pending') {
+                    if ($friend->pivot->user_id == auth()->user()->id) {
+                        $this->sentRequests = collect(($friend));
+                    } elseif ($friend->pivot->friend_id == auth()->user()->id) {
+                        $this->friendRequests = collect($friend);
+                    }
+                }
+            }
         }
     }
 

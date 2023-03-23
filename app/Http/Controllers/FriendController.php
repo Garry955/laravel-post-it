@@ -12,10 +12,9 @@ class FriendController extends Controller
     /**
      * Returns list view of the selected user friends
      *
-     * @param User $user
      * @return View
      */
-    public function listFriends(User $user)
+    public function index(User $user)
     {
         // dd($user->friends());
         return view('friend.index', [
