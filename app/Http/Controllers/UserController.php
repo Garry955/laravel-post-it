@@ -30,9 +30,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('user.profile', [
-            'user' => $user,
-        ]);
+        // dd(auth()->user()->getTotalFriendsAttached());
+        return view('user.profile', compact('user') );
     }
 
 

@@ -32,7 +32,7 @@ class FriendController extends Controller
      */
     public function sendFriendRequest(User $user)
     {
-        auth()->user()->friends()->syncWithoutDetaching($user->id);
+        $user->friends()->syncWithoutDetaching(auth()->user()->id);
 
         return redirect()->back()->with('message', 'Friend request to ' . $user->name . ' sent');
     }
@@ -59,7 +59,7 @@ class FriendController extends Controller
      */
     public function acceptFriendRequest(User $user)
     {
-        $user->friends()->updateExistingPivot(auth()->user()->id, [
+        auth()->user()->friends()->updateExistingPivot($user->id, [
             'status' => 'accepted',
             'friends_since' => now()->toDateString(),
         ]);
@@ -96,6 +96,7 @@ class FriendController extends Controller
     public function cancelRequest(User $user)
     {
         auth()->user()->friends()->detach($user->id);
-        return redirect()->back()->with('message', 'Friend request to ' . $user->name . 'removed');
+        $user->friends()->detach(auth()->user()->id);
+        return redirect()->back()->with('message', 'Friend request to ' . $user->name . ' removed');
     }
 }
